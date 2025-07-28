@@ -1,0 +1,29 @@
+{
+  "categories": [
+    {
+      "id": "favorites",
+      "name": "My favorites",
+      "anchor": "favorites"
+    },
+    {
+      "id": "agile",
+      "name": "Agile, Leadership and Product",
+      "anchor": "agile"
+    },
+    {
+      "id": "development",
+      "name": "Architecture, Development & Software development practices",
+      "anchor": "development"
+    },
+    {
+      "id": "devops",
+      "name": "DevOps, Observability & Security",
+      "anchor": "devops"
+    },
+    {
+      "id": "tools",
+      "name": "Tools and things from Github",
+      "anchor": "tools"
+    }
+  ]
+}
