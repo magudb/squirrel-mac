@@ -53,29 +53,6 @@ on run
         end try
     end if
     
-    if pageURL is "" and application "Firefox" is running then
-        -- Firefox requires different approach
-        tell application "System Events"
-            tell process "Firefox"
-                set frontmost to true
-                -- Get URL from address bar
-                keystroke "l" using {command down}
-                delay 0.1
-                keystroke "c" using {command down}
-                delay 0.1
-            end tell
-        end tell
-        set pageURL to the clipboard
-        
-        -- Get title from window name
-        tell application "Firefox"
-            set pageTitle to name of front window
-        end tell
-        
-        -- Can't get selected text from Firefox easily
-        set selectedText to ""
-    end if
-    
     if pageURL is "" then
         display notification "No supported browser found or couldn't get URL" with title "Error"
         return
@@ -86,8 +63,6 @@ on run
         set pageTitle to text 1 thru -10 of pageTitle
     else if pageTitle ends with " - Google Chrome" then
         set pageTitle to text 1 thru -17 of pageTitle
-    else if pageTitle ends with " — Mozilla Firefox" then
-        set pageTitle to text 1 thru -19 of pageTitle
     else if pageTitle ends with " - Microsoft Edge" then
         set pageTitle to text 1 thru -18 of pageTitle
     end if

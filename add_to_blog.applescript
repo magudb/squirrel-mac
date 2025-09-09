@@ -111,59 +111,7 @@ on run
 			end tell
 		end if
 		
-		-- Try Firefox as last resort (limited support)
-		tell application "System Events"
-			set firefoxRunning to (name of processes) contains "Firefox"
-		end tell
-		
-		if firefoxRunning then
-			tell application "Firefox" to activate
-			delay 0.5
-			
-			-- Use GUI scripting to get URL from address bar
-			tell application "System Events"
-				tell process "Firefox"
-					-- Copy URL from address bar
-					keystroke "l" using {command down} -- Focus address bar
-					delay 0.2
-					keystroke "c" using {command down} -- Copy URL
-					delay 0.2
-				end tell
-			end tell
-			
-			set pageURL to the clipboard
-			
-			-- Try to get window title
-			set pageTitle to ""
-			tell application "System Events"
-				tell process "Firefox"
-					try
-						set pageTitle to name of window 1
-						-- Remove " — Mozilla Firefox" suffix if present
-						if pageTitle ends with " — Mozilla Firefox" then
-							set pageTitle to text 1 thru -20 of pageTitle
-						else if pageTitle ends with " - Mozilla Firefox" then
-							set pageTitle to text 1 thru -19 of pageTitle
-						end if
-					end try
-				end tell
-			end tell
-			
-			if pageTitle is "" then
-				set pageTitle to pageURL
-			end if
-			
-			-- Format the link in Jekyll/Markdown style
-			set formattedLink to "- [" & pageTitle & "](" & pageURL & "){:target=\"_blank\"}"
-			
-			-- Call shell script to append the link
-			do shell script "bash " & quoted form of shellScriptPath & " " & quoted form of blogDraftPath & " " & quoted form of formattedLink & " " & quoted form of pageURL
-			
-			display notification "Link added (Firefox: no selected text support)" with title "Blog Link Added"
-			return
-		end if
-		
-		display alert "No browser window found" message "Please open Safari, Chrome, Edge, or Firefox with the page you want to add."
+		display alert "No browser window found" message "Please open Safari, Chrome, Edge with the page you want to add."
 		
 	on error errMsg
 		display alert "Error" message errMsg
